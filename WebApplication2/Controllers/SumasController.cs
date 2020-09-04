@@ -48,6 +48,7 @@ namespace WebApplication2.Controllers
         [HttpPost]
         public async Task<Sumas> Post([FromBody] Sumas suma)
         {
+            suma.Resultado = suma.Valor1 + suma.Valor2;
             await _context.Sumas.AddAsync(suma);
             await _context.SaveChangesAsync();
             return suma;
@@ -64,10 +65,11 @@ namespace WebApplication2.Controllers
                 return BadRequest();
             }
 
+            suma.Resultado = suma.Valor1 + suma.Valor2;
             _context.Entry(suma).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(suma);
 
         }
 
